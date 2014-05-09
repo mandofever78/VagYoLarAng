@@ -3,8 +3,25 @@ $ruby_version = '2.1.1'
 
 class must-have {
   include apt
-
+  include mysql
+  include phpmyadmin
+  include php
+  include php55
+  include apache
+  include composer
+  include ruby
+  include wget
+  
   apt::ppa { "ppa:chris-lea/node.js": }
+  
+  Exec {
+    path => '/usr/local/bin:/usr/bin:/bin',
+  }
+  
+  exec { 'apt-getupdate':
+    command => '/usr/bin/apt-get update',
+    require => Exec['add php55 apt-repo']
+  }
 
   exec { 'apt-get update':
     command => '/usr/bin/apt-get update',
@@ -15,7 +32,6 @@ class must-have {
     command => '/usr/bin/apt-get update',
     require => Apt::Ppa["ppa:chris-lea/node.js"],
   }
-
 
   exec { 'install yeoman':
     command => '/usr/bin/npm install -g yo phantomjs',
@@ -33,8 +49,14 @@ class must-have {
     creates => '/usr/lib/node_modules/generator-angular',
     require => Exec["install yeoman"],
   }
+  
+  exec { 'install grunt':
+    cwd => '/vagrant/www',
+    command => '/usr/bin/npm install grunt',
+    require => Exec['create angular site'],
+  }
 
-  file { "/home/vagrant/angular":
+  file { "/vagrant/www":
       ensure => "directory",
       before => Exec['create angular site'],
       require => Exec['install angular generator'],
@@ -42,23 +64,21 @@ class must-have {
 
   exec { 'create angular site':
     command => '/usr/bin/yes | /usr/bin/yo angular',
-    cwd => '/home/vagrant/angular',
-    creates => '/home/vagrant/angular/app',
-    require => File["/home/vagrant/angular"],
-    logoutput => true,
+    cwd => '/vagrant/www',
+    creates => '/vagrant/www/app',
+    require => File["/vagrant/www"],
     returns => [0, 8]
   }
 
   file_line { "update hostname in gruntfile": 
-    line => "\t\t\t\thostname: '0.0.0.0'", 
-    path => "/home/vagrant/angular/Gruntfile.js", 
+    line => "\t\thostname: '0.0.0.0',", 
+    path => "/vagrant/www/Gruntfile.js", 
     match => "hostname: '.*'", 
     ensure => present,
     require => Exec["create angular site"],
   }
 
-  package { ["wget",
-             "curl",
+  package { ["curl",
              "bash",
              "nodejs",
              "git-core",
@@ -67,30 +87,16 @@ class must-have {
     ensure => present,
     require => Exec["apt-get update 2"],
   }
+  
+  package { ['sass', 'compass']:
+      ensure => 'installed',
+      provider => 'gem',
+      require => Package['rubygems']
+  }
 
- # --- Ruby ---------------------------------------------------------------------
-
-Exec {
-  path => '/usr/local/bin:/usr/bin:/bin',
-}
-
-#    exec { 'install_rvm':
-#      command => "${as_vagrant} 'curl -L https://get.rvm.io | bash -s stable'",
-#      creates => "/.rvm/bin/rvm",
-#      require => Package['curl']
-#    }
-
-#    exec { 'install_ruby':
-      # We run the rvm executable directly because the shell function assumes an
-      # interactive environment, in particular to display messages or ask questions.
-      # The rvm executable is more suitable for automated installs.
-      #
-      # use a ruby patch level known to have a binary
-#      command => "${as_vagrant} '/home/vagrant/.rvm/bin/rvm install ruby-${ruby_version} --#binary --autolibs=enabled && rvm alias create default ${ruby_version}'",
-#      creates => "/.rvm/bin/ruby",
-#      require => Exec['install_rvm']
-#    }
-
+  if $virtual == "virtualbox" and $fqdn == '' {
+       $fqdn = "localhost"
+  }
 }
 
 include must-have
