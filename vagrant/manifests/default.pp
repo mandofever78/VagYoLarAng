@@ -71,12 +71,13 @@ class must-have {
   }
 
   file_line { "update hostname in gruntfile": 
-    line => "\t\thostname: '0.0.0.0',", 
+    line => "\t\t\t\thostname: '0.0.0.0',", 
     path => "/vagrant/www/Gruntfile.js", 
     match => "hostname: '.*'", 
     ensure => present,
     require => Exec["create angular site"],
   }
+  
 
   package { ["curl",
              "bash",
