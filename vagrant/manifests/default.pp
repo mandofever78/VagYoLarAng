@@ -45,7 +45,7 @@ class must-have {
     require => Package['generator-angular'],
 }
 
-  file { "/vagrant/www":
+  file { ["/vagrant/www", "/vagrant/www/ang", "/vagrant/www/lvl"]:
       ensure => "directory",
       before => Package['generator-angular'],
   }
