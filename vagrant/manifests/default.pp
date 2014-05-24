@@ -11,6 +11,7 @@ class must-have {
   include composer
   include wget
   include nodejs
+  include laravel-app
   
   Exec {
     path => '/usr/local/bin:/usr/bin:/bin',

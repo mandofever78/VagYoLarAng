@@ -1,9 +1,8 @@
 <VirtualHost *:80>
-    serverName devapp.com
-	DocumentRoot "\var\www\ang\app"
+	DocumentRoot "/var/www/ang/dist"
     
-	alias /lvl "\var\www\lvl\public"
-	<Directory "\var\www\lvl\public">
+	alias /lvl "/var/www/lvl/public"
+	<Directory "/var/www/lvl/public">
 		Options Indexes FollowSymLinks MultiViews
         AllowOverride all
             Order allow,deny
