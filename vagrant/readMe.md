@@ -4,8 +4,6 @@ RUN THESE COMMANDS AFTER 'VAGRANT UP'
 
     cd /var/www/ang
 
-    yo angular
-
     npm install
 
     bower update

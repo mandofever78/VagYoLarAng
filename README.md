@@ -14,7 +14,7 @@ This repo is intended as a proof of concept for creating and running a fully-fun
 
 To create your local Yeoman environment:
 
-        $ git clone https://github.com/lwndev/vagrant-yeoman-env.git
+        $ git clone https://github.com/mandofever78/vagrant-yeoman-env.git
         $ cd vagrant-yeoman-env/vagrant
         $ vagrant up
         
@@ -22,11 +22,14 @@ This will do the following
 
 1. Download a Vagrant 'base box' for VirtualBox.  The box in question includes Ubuntu Server 12.10 with Ruby 1.9.3p194 and Puppet 2.7.18.
 2. Boot the VM and run Puppet to install additional dependencies:
-    1. vim
+    1. composer
     2. bash
     3. nodejs
     4. git
-    5. fontconfig
+    5. mysql
+    6. phpmyadmin
+    7. apache
+    8. node
 3. Then a few gems are installed:
     1. Compass
     2. SASS
@@ -35,7 +38,7 @@ This will do the following
     2. Grunt
     3. Bower
     4. Phantomjs
-    5. Yeoman "webapp" generator
+    5. Yeoman "angular" generator
 5. Then yo is called with the webapp generator as its argument and a project skeleton is created
 6. And finally, once the webapp project is in place a small tweak is made to Gruntfile.js in the /webapp directory that makes the webapp instance available to the host machine when it is running
 

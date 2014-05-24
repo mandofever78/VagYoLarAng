@@ -12,6 +12,7 @@ class must-have {
   include wget
   include nodejs
   include laravel-app
+  include angular-generator
   
   Exec {
     path => '/usr/local/bin:/usr/bin:/bin',
@@ -46,7 +47,7 @@ class must-have {
     require => Package['generator-angular'],
 }
 
-  file { ["/vagrant/www", "/vagrant/www/ang", "/vagrant/www/lvl"]:
+  file { ["/vagrant/www/ang", "/vagrant/www/lvl"]:
       ensure => "directory",
       before => Package['generator-angular'],
   }
