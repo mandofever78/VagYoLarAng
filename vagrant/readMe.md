@@ -1,3 +1,5 @@
+RUN THESE COMMANDS AFTER 'VAGRANT UP'
+
 vagrant ssh
 cd /var/www/ang
 yo angular
