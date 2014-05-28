@@ -58,7 +58,7 @@ describe 'apt::ppa', :type => :define do
     end
   end
 
-  [ { :lsbdistcodename => 'natty', 
+  [ { :lsbdistcodename => 'natty',
       :package => 'python-software-properties' },
     { :lsbdistcodename => 'quantal',
       :package => 'software-properties-common'},

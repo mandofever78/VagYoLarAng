@@ -33,7 +33,7 @@ class apache
         "/etc/apache2/sites-available/000-default.conf":
             ensure  => present,
             owner => root, group => root,
-            source  => "/vagrant/templates/vhost",
+            source  => "/vagrant/puppet/templates/vhost",
             require => Package['apache2'],
     }
 

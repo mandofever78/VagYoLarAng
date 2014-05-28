@@ -11,11 +11,11 @@ class angular-generator {
     command => '/usr/bin/yes | /usr/bin/yo angular',
     cwd => '/var/www/ang',
     require => File["/var/www/ang"],
-    returns => [0, 8, 77]
+    returns => [0, 8, 77],
   }
 
   file_line { "update hostname in gruntfile": 
-    line => "\t\t\t\thostname: '0.0.0.0'", 
+    line => "\t\t\t\thostname: '0.0.0.0',", 
     path => "/var/www/ang/Gruntfile.js", 
     match => "hostname: '.*'", 
     ensure => present,

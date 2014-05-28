@@ -27,9 +27,14 @@ kda/AoGANWrLCz708y7VYgAtW2Uf1DPOIYMdvo6fxIB5i9ZfISgcJ/bbCUkFrhoH
 +vq/5CIWxCPp0f85R4qxxQ5ihxJ0YDQT9Jpx4TMss4PSavPaBH3RXow5Ohe+bYoQ
 NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 -----END RSA PRIVATE KEY-----" >> /home/vagrant/.ssh/id_rsa
-mysql -uroot < "/vagrant/scripts/enable_remote_mysql_access.sql"
+mysql -uroot < "/vagrant/puppet/scripts/enable_remote_mysql_access.sql"
 sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 sudo service mysql restart
-cd /vagrant/www
+cd /var/www/ang
+npm install --allow-root
 bower install --allow-root
+bower update --allow-root
+npm install karma-jasmine --save-dev --allow-root
+npm install karma-phantomjs-launcher --save-dev --allow-root
+bower install angular-mocks --allow-root
 

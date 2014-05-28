@@ -1,8 +1,8 @@
 <VirtualHost *:80>
 	DocumentRoot "/var/www/ang/dist"
     
-	alias /lvl "/var/www/lvl/public"
-	<Directory "/var/www/lvl/public">
+	alias /lvl "/var/www/laravel/public"
+	<Directory "/var/www/laravel/public">
 		Options Indexes FollowSymLinks MultiViews
         AllowOverride all
             Order allow,deny

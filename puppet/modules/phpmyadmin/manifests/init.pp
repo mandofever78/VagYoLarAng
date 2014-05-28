@@ -26,7 +26,7 @@ class phpmyadmin
             owner => root, group => root,
             mode => '0775',
             notify  => Service['apache2'],
-            source  => "/vagrant/modules/phpmyadmin/templates/config.inc.php",
+            source  => "/vagrant/puppet/modules/phpmyadmin/templates/config.inc.php",
             require => [Package['phpmyadmin'], Package['apache2']],
     }
 }

@@ -35,7 +35,8 @@ class must-have {
   
   package { ["yo",
              "phantomjs",
-             "generator-angular"]:
+             "generator-angular",
+             "generator-karma"]:
     ensure => present,
     require => [ Exec["apt-get update 2"], Package["nodejs"] ],
     provider => "npm",
@@ -47,7 +48,7 @@ class must-have {
     require => Package['generator-angular'],
 }
 
-  file { ["/vagrant/www/ang", "/vagrant/www/lvl"]:
+  file { ["/vagrant/www/ang"]:
       ensure => "directory",
       before => Package['generator-angular'],
   }
