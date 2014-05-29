@@ -30,6 +30,7 @@ NE5OgEXk2wVfZczCZpigBKbKZHNYcelXtTt/nP3rsCuGcM4h53s=
 mysql -uroot < "/vagrant/puppet/scripts/enable_remote_mysql_access.sql"
 sed -i "s/^bind-address/#bind-address/" /etc/mysql/my.cnf
 sudo service mysql restart
+rm -rf /var/www/html
 cd /var/www/ang
 npm install --allow-root
 bower install --allow-root
