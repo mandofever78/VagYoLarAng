@@ -21,7 +21,7 @@ A vagrant dev environment for Yeoman with Angular and Laravel that uses a Ubuntu
 
 To create your local Yeoman environment:
 
-        $ git clone https://github.com/mandofever78/vagrant-yeoman-env.git
+        $ git clone https://github.com/mandofever78/VagYoLarAng.git
         $ cd vagrant-yeoman-env/vagrant
         $ vagrant up
         
