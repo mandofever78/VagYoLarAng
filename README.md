@@ -1,4 +1,4 @@
-VAgYoLarAng
+VagYoLarAng
 ==================
 
 A vagrant dev environment for Yeoman with Angular and Laravel that uses a Ubuntu Precise32 12.04 Vagrant box and Puppet for provisioning.
