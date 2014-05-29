@@ -15,7 +15,7 @@ A vagrant dev environment for Yeoman with Angular and Laravel that uses a Ubuntu
 80 => 8888 (view dist after performing 'grunt')
 3306 => 8889 (mysql)
 9000 => 9000 (grunt serve)
-35729 => 35729 (livereload)
+35729 => 35729 (livereload - not yet working!! )
 
 ## Usage
 
@@ -61,36 +61,67 @@ This will do the following
 9. Finally, apache is configured (and restarted) with the /puppet/template/vhost file to which also creates an alias for the laravel api backend reachable through angular routes using "/lvl"
 
 
-### Viewing the project
+### Post-vagrant configuration
 
-Once everything is downloaded and puppet is done running, you can log in to the VM and start the server
+When you are returned to the command prompt, you can log in to the VM and start the server and complete the post install configuration with these commands: (Later versions will have these commands automated, just haven't had time to integrate them into vagrant/puppet)
 
         $ vagrant ssh
         $ cd /var/www/ang
         $ yo karma
         $ bower update
         
-        //Add these lines to karma.conf.js after angular.js include:
+        //Add these lines to karma.conf.js after the angular.js include:
         
-        'app/bower_components/angular-resource/angular-resource.js',
-        'app/bower_components/angular-cookies/angular-cookies.js',
-        'app/bower_components/angular-sanitize/angular-sanitize.js',
-        'app/bower_components/angular-route/angular-route.js',
+                'app/bower_components/angular-resource/angular-resource.js',
+                'app/bower_components/angular-cookies/angular-cookies.js',
+                'app/bower_components/angular-sanitize/angular-sanitize.js',
+                'app/bower_components/angular-route/angular-route.js',
         
         //Then edit this line:
-        'app/bower_components/angular/angular-mocks.js',
+                'app/bower_components/angular/angular-mocks.js',
         //To this:
-        'app/bower_components/angular-mocks/angular-mocks.js',
+                'app/bower_components/angular-mocks/angular-mocks.js',
         
         //Change karma browser from "Chrome" to "PhantomJS" in karma.cong.js and karam-e2e.conf.js:
         
-        browsers: ['PhantomJS'],
+                browsers: ['PhantomJS'],
         
-        //Finally, run bower update
-        
+        //Run bower update again
         $ bower update 
         
-        Run "grunt serve" to view or "grunt" to build dist
+        //Edit Laravel .htaccess
+        $ sudo nano /var/www/laravel/public/.htaccess
+        
+        //Add this line right after "RewriteEngine On"
+        
+                RewriteBase /lvl
+        
+        //Enable HTML5 history API, editing Angular index.html
+        $ sudo nano /var/www/ang/app/index.html
+        
+        //Add these lines to the <head> section:
+        
+                $locationProvider.html5Mode(true);
+                <base href="/" />
+                <meta name="fragment" content="!" />
+        
+        //Create Angular .htaccess file
+        $ sudo nano /var/www/ang/.htaccess
+
+
+                <IfModule mod_rewrite.c>
+                    Options -MultiViews
+                    RewriteEngine On
+                
+                    RewriteCond %{REQUEST_FILENAME} !-d
+                    RewriteCond %{REQUEST_FILENAME} !-f
+                    RewriteRule ^ index.html [NC,L]
+                </IfModule>
+        
+        
+### View the project (dev build)
+        
+        $ grunt serve
         
 Then you can access the server on your host machine's browsers at http://0.0.0.0:9000
 
@@ -106,13 +137,14 @@ If you want to run unit tests on the project, ssh to the box, cd to ~/var/www/an
         
 This will run your unit tests using the headless Webkit browser "Phantomjs"
 
-### Packaging
+### Packaging (dist build)
 
 If you want to package your project, ssh to the box, cd to ~/var/www/ang and run:
 
         $ grunt
         
 Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
+(some links may throw 404 because /dist directory is not the default bower location)
         
 ## Notes
 
