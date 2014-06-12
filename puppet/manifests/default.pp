@@ -12,7 +12,7 @@ class must-have {
   include wget
   include nodejs
   include laravel-app
-  include angular-generator
+
   
   Exec {
     path => '/usr/local/bin:/usr/bin:/bin',
@@ -34,21 +34,14 @@ class must-have {
   }
   
   package { ["yo",
-             "phantomjs",
              "generator-angular",
              "generator-karma"]:
     ensure => present,
     require => [ Exec["apt-get update 2"], Package["nodejs"] ],
     provider => "npm",
   }
-  
-  exec { 'install grunt':
-     cwd => '/vagrant/www',
-    command => '/usr/bin/npm install grunt',
-    require => Package['generator-angular'],
-}
 
-  file { ["/vagrant/www/ang"]:
+  file { ["/vagrant/www/angular"]:
       ensure => "directory",
       before => Package['generator-angular'],
   }
@@ -57,6 +50,7 @@ class must-have {
              "bash",
              "git-core",
              "build-essential",
+             "phantomjs",
              "fontconfig"]:
     ensure => present,
     require => Exec["apt-get update 2"],

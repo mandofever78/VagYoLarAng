@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-	DocumentRoot "/var/www/ang/dist"
+	DocumentRoot "/var/www/angular/dist"
     
 	alias /lvl "/var/www/laravel/public"
 	<Directory "/var/www/laravel/public">

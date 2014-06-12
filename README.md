@@ -1,7 +1,7 @@
-VagYoLarAng
+A Vagrant-Yeoman-Laravel-Angular-Environment
 ==================
 
-A vagrant dev environment for Yeoman with Angular and Laravel that uses a Ubuntu Precise32 12.04 Vagrant box and Puppet for provisioning.
+A Vagrant dev environment for Yeoman with Generator-Angular and Laravel built on an Ubuntu Precise32 12.04 Vagrant box provisioned with Puppet.
 
 
 ## Dependencies
@@ -15,15 +15,16 @@ A vagrant dev environment for Yeoman with Angular and Laravel that uses a Ubuntu
 80 => 8888 (view dist after performing 'grunt')
 3306 => 8889 (mysql)
 9000 => 9000 (grunt serve)
-35729 => 35729 (livereload - not yet working!! )
+35729 => 35729 (livereload)
 
 ## Usage
 
 To create your local Yeoman environment:
 
-        $ git clone https://github.com/mandofever78/VagYoLarAng.git
+        $ git clone https://github.com/mandofever78/vagrant-yeoman-env.git
         $ cd vagrant-yeoman-env/vagrant
         $ vagrant up
+        $ Enter administrator password when prompted to enable NFS sharing
         
         
 This will do the following
@@ -42,6 +43,8 @@ This will do the following
     9. fontconfig
     10. build-essential (compiler)
     11. wget
+    12. PhantomJS
+    13. Laravel
 3. Then directories for Angular and Laravel are created for later scaffolding:
     1. /var/www/ang
     2. /var/www/laravel   
@@ -50,107 +53,61 @@ This will do the following
     2. SASS
 5. Then some additional dependencies for Yeoman are installed via NPM
     1. Yo
-    2. Grunt
-    3. Bower
-    4. Phantomjs
-    5. Yeoman Angular-generator
-    6. Yeoman Karma-generator
-6. Then a vanilla generator-angular site is scaffolded in /var/www/ang
-7. Then Laravel is installed in /var/www/lvl 
-8. Then, a small tweak is made to Gruntfile.js in the /ang/app directory that makes the angular instance available to the host machine when it is running
-9. Finally, apache is configured (and restarted) with the /puppet/template/vhost file to which also creates an alias for the laravel api backend reachable through angular routes using "/lvl"
+    2. Generator-Angular
+    3. Generator-Karma
+6. Then Laravel is installed in /var/www/laravel 
+7. Finally, apache is configured (and restarted) with the /puppet/template/vhost file to which also creates an alias for the laravel api backend routes reachable using "/lvl"
 
 
-### Post-vagrant configuration
+### Configure angular
 
-When you are returned to the command prompt, you can log in to the VM and start the server and complete the post install configuration with these commands: (Later versions will have these commands automated, just haven't had time to integrate them into vagrant/puppet)
+Once everything is downloaded and puppet is done running, you can log in to the VM and start the server, then run these commands: ("front" is a custom alias pointing to the Angular application root[/var/www/angular]. Using "back" aliases to the Laravel root[/var/www/laravel].)
 
         $ vagrant ssh
-        $ cd /var/www/ang
-        $ yo karma
-        $ bower update
+        $ front
+        $ yo angular //select desired options
+        $ yo karma //for grunt testing
+        $ npm install
+        $ bower install
         
-        //Add these lines to karma.conf.js after the angular.js include:
+        Edit /var/www/angular/Gruntfile.js ~line 71 from 'localhost' to '0.0.0.0'
         
-                'app/bower_components/angular-resource/angular-resource.js',
-                'app/bower_components/angular-cookies/angular-cookies.js',
-                'app/bower_components/angular-sanitize/angular-sanitize.js',
-                'app/bower_components/angular-route/angular-route.js',
         
-        //Then edit this line:
-                'app/bower_components/angular/angular-mocks.js',
-        //To this:
-                'app/bower_components/angular-mocks/angular-mocks.js',
-        
-        //Change karma browser from "Chrome" to "PhantomJS" in karma.cong.js and karam-e2e.conf.js:
-        
-                browsers: ['PhantomJS'],
-        
-        //Run bower update again
-        $ bower update 
-        
-        //Edit Laravel .htaccess
-        $ sudo nano /var/www/laravel/public/.htaccess
-        
-        //Add this line right after "RewriteEngine On"
-        
-                RewriteBase /lvl
-        
-        //Enable HTML5 history API, editing Angular index.html
-        $ sudo nano /var/www/ang/app/index.html
-        
-        //Add these lines to the <head> section:
-        
-                $locationProvider.html5Mode(true);
-                <base href="/" />
-                <meta name="fragment" content="!" />
-        
-        //Create Angular .htaccess file
-        $ sudo nano /var/www/ang/.htaccess
+### View the Angular Project
+
+        Run "grunt serve" to view (or 'gs')
+        Run "grunt test" to test (or 'gt') //uses PhantomJS 
+        Run "grunt" to build dist (or 'g')
 
 
-                <IfModule mod_rewrite.c>
-                    Options -MultiViews
-                    RewriteEngine On
-                
-                    RewriteCond %{REQUEST_FILENAME} !-d
-                    RewriteCond %{REQUEST_FILENAME} !-f
-                    RewriteRule ^ index.html [NC,L]
-                </IfModule>
-        
-        
-### View the project (dev build)
-        
-        $ grunt serve
-        
-Then you can access the server on your host machine's browsers at http://0.0.0.0:9000
+Access the dev project on your host machine's browsers at http://0.0.0.0:9000
+
+**NOTE** 'gs', 'gt', and 'g' are custom bash aliases that first 'cd' into /var/www/angular then run 'grunt serve', 'grunt test', and 'grunt' respectively.
+
+**NOTE** If you run into dependency problems, try deleting the /var/www/angular/node_modules folder and running "npm cache clear" followed by "npm install"
+
+**NOTE** if you get karma:unit Task failures, make sure your /var/www/angular/test/karma.conf.js 'files' array contains these lines:
+      '../bower_components/angular/angular.js',
+      '../bower_components/angular-mocks/angular-mocks.js',
+      '../bower_components/angular-resource/angular-resource.js',
+      '../bower_components/angular-animate/angular-animate.js',
+      '../bower_components/angular-touch/angular-touch.js',
+      '../bower_components/angular-cookies/angular-cookies.js',
+      '../bower_components/angular-sanitize/angular-sanitize.js',
+      '../bower_components/angular-route/angular-route.js',
+      '../app/scripts/*.js',
+      '../app/scripts/**/*.js',
+      'spec/**/*.js'
+      
+**NOTE** Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
 
 ### PHPmyAdmin
 
 You can use PHPmyAdmin by browsing to http://0.0.0.0:8888/phpmyadmin
 
-### Testing
 
-If you want to run unit tests on the project, ssh to the box, cd to ~/var/www/ang/app and run the following command
+### Laravel
 
-        $ grunt test
-        
-This will run your unit tests using the headless Webkit browser "Phantomjs"
+Public Laravel api routes that you create can be tested by the host browser at http://0.0.0.0:8888/lvl/(your-api-route) **Note the /lvl extension, which is set via the /puppet/templates/vhost template during provisioning
 
-### Packaging (dist build)
-
-If you want to package your project, ssh to the box, cd to ~/var/www/ang and run:
-
-        $ grunt
-        
-Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
-(some links may throw 404 because /dist directory is not the default bower location)
-        
-## Notes
-
-
-* Live refresh of the browser is not currently supported as the project server and your browser are running on different operating systems.
-
-Happy Coding!
-
-        
+    
