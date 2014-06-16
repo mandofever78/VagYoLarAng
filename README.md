@@ -1,4 +1,4 @@
-A Vagrant-Yeoman-Laravel-Angular-Environment
+A Vagrant-Yeoman-Laravel-Angular Environment
 ==================
 
 A Vagrant dev environment for Yeoman with Generator-Angular and Laravel built on an Ubuntu Precise32 12.04 Vagrant box provisioned with Puppet.
@@ -7,22 +7,22 @@ A Vagrant dev environment for Yeoman with Generator-Angular and Laravel built on
 ## Dependencies
 
 1. [Vagrant](http://downloads.vagrantup.com/)
-2. [VirtualBox (for local servers)](https://www.virtualbox.org/wiki/Downloads)
+2. [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 ## Port Forwarding
 
-22 => 2222 (ssh)
-80 => 8888 (view dist after performing 'grunt')
-3306 => 8889 (mysql)
-9000 => 9000 (grunt serve)
-35729 => 35729 (livereload)
+        22 => 2222 (ssh)
+        80 => 8888 (view dist after performing 'grunt')
+        3306 => 8889 (mysql)
+        9000 => 9000 (grunt serve)
+        35729 => 35729 (livereload)
 
 ## Usage
 
 To create your local Yeoman environment:
 
-        $ git clone https://github.com/mandofever78/vagrant-yeoman-env.git
-        $ cd vagrant-yeoman-env/vagrant
+        $ git clone https://github.com/mandofever78/VagYoLarAng.git
+        $ cd vagyolarang
         $ vagrant up
         $ Enter administrator password when prompted to enable NFS sharing
         
@@ -46,7 +46,7 @@ This will do the following
     12. PhantomJS
     13. Laravel
 3. Then directories for Angular and Laravel are created for later scaffolding:
-    1. /var/www/ang
+    1. /var/www/angular
     2. /var/www/laravel   
 4. Then a few gems are installed:
     1. Compass
@@ -56,23 +56,25 @@ This will do the following
     2. Generator-Angular
     3. Generator-Karma
 6. Then Laravel is installed in /var/www/laravel 
-7. Finally, apache is configured (and restarted) with the /puppet/template/vhost file to which also creates an alias for the laravel api backend routes reachable using "/lvl"
-
+7. Apache is configured (and restarted) with the /puppet/template/vhost file to which also creates an alias for the laravel api backend routes reachable using "/lvl"
+8. Finally, custom .bash_profile and .bash_aliases are added to the box.
 
 ### Configure angular
 
-Once everything is downloaded and puppet is done running, you can log in to the VM and start the server, then run these commands: ("front" is a custom alias pointing to the Angular application root[/var/www/angular]. Using "back" aliases to the Laravel root[/var/www/laravel].)
+Once everything is downloaded and puppet is done running, you can log in to the VM and start the server, then run these commands:
 
         $ vagrant ssh
-        $ front
+        $ cd /var/www/angular (or 'front')
         $ yo angular //select desired options
-        $ yo karma //for grunt testing
+        $ yo karma //IMPORTANT: Enter 'No' when prompted to overwrite karma.conf
         $ npm install
         $ bower install
         
         Edit /var/www/angular/Gruntfile.js ~line 71 from 'localhost' to '0.0.0.0'
         
-        
+**SHORTCUTS:** 'front' is a custom alias pointing to the Angular application root[/var/www/angular], 'back' aliases to the Laravel root[/var/www/laravel].
+
+
 ### View the Angular Project
 
         Run "grunt serve" to view (or 'gs')
@@ -80,7 +82,7 @@ Once everything is downloaded and puppet is done running, you can log in to the 
         Run "grunt" to build dist (or 'g')
 
 
-Access the dev project on your host machine's browsers at http://0.0.0.0:9000
+Access the dev project (grunt serve) on your host machine's browsers at http://0.0.0.0:9000
 
 **SHORTCUTS:** 'gs', 'gt', and 'g' are custom bash aliases that first 'cd' into /var/www/angular then run 'grunt serve', 'grunt test', and 'grunt' respectively.
 
@@ -100,18 +102,20 @@ Access the dev project on your host machine's browsers at http://0.0.0.0:9000
         '../app/scripts/**/*.js',
         'spec/**/*.js'
       
-**NOTE:** Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
+**NOTE:** Compressed, packaged assets (Angular Only) can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
 
 ### PHPmyAdmin
 
-You can use PHPmyAdmin by browsing to http://0.0.0.0:8888/phpmyadmin
+You can use PHPmyAdmin by browsing to http://0.0.0.0:8888/phpmyadmin (User: root, no password)
 
 
 ### Laravel
 
 Public Laravel api routes that you create can be reached directly by the host browser at http://0.0.0.0:8888/lvl/(your-api-route). 
 
-Use http://localhost:8888/lvl/(your-api-route) to connect the API routes in your Angular controllers during developement. DON'T FORGET TO REMOVE http://localhost:8888 FROM ANGULAR CONTROLLER API CALLS BEFORE USING 'GRUNT' TO BUILD, /lvl/(your-api-route) IS ALL THAT IS NEEDED FOR PRODUCTION.
+**Angular Notes:** Use http://localhost:8888/lvl/(your-api-route) to connect the API routes in your Angular controllers during developement. This is only required for use with 'grunt serve' 
+
+**IMPORTANT:** DON'T FORGET TO REMOVE http://localhost:8888 FROM ANGULAR CONTROLLER API CALLS BEFORE USING 'GRUNT' TO BUILD, ALL THAT IS NEEDED FOR PRODUCTION IS /lvl/(your-api-route)
 
 
     
