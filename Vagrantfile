@@ -29,7 +29,7 @@ config.vm.define :vagrant do |vgr_config|
        vgr_config.vm.synced_folder "www", "/var/www", {:type => "nfs"}
        vgr_config.vm.provision :shell, :inline => "echo \"America/Chicago\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
        vgr_config.vm.provider :virtualbox do |vb|
-       vb.customize ["modifyvm", :id, "--memory", "512"]
+       vb.customize ["modifyvm", :id, "--memory", "1024"]
        end
 
        vgr_config.vm.provision :puppet do |puppet|
