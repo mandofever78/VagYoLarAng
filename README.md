@@ -87,17 +87,17 @@ Access the dev project on your host machine's browsers at http://0.0.0.0:9000
 **NOTE** If you run into dependency problems, try deleting the /var/www/angular/node_modules folder and running "npm cache clear" followed by "npm install"
 
 **NOTE** if you get karma:unit Task failures, make sure your /var/www/angular/test/karma.conf.js 'files' array contains these lines:
-      '../bower_components/angular/angular.js',
-      '../bower_components/angular-mocks/angular-mocks.js',
-      '../bower_components/angular-resource/angular-resource.js',
-      '../bower_components/angular-animate/angular-animate.js',
-      '../bower_components/angular-touch/angular-touch.js',
-      '../bower_components/angular-cookies/angular-cookies.js',
-      '../bower_components/angular-sanitize/angular-sanitize.js',
-      '../bower_components/angular-route/angular-route.js',
-      '../app/scripts/*.js',
-      '../app/scripts/**/*.js',
-      'spec/**/*.js'
+        '../bower_components/angular/angular.js',
+        '../bower_components/angular-mocks/angular-mocks.js',
+        '../bower_components/angular-resource/angular-resource.js',
+        '../bower_components/angular-animate/angular-animate.js',
+        '../bower_components/angular-touch/angular-touch.js',
+        '../bower_components/angular-cookies/angular-cookies.js',
+        '../bower_components/angular-sanitize/angular-sanitize.js',
+        '../bower_components/angular-route/angular-route.js',
+        '../app/scripts/*.js',
+        '../app/scripts/**/*.js',
+        'spec/**/*.js'
       
 **NOTE** Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
 
