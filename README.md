@@ -82,11 +82,11 @@ Once everything is downloaded and puppet is done running, you can log in to the 
 
 Access the dev project on your host machine's browsers at http://0.0.0.0:9000
 
-**NOTE** 'gs', 'gt', and 'g' are custom bash aliases that first 'cd' into /var/www/angular then run 'grunt serve', 'grunt test', and 'grunt' respectively.
+**SHORTCUTS:** 'gs', 'gt', and 'g' are custom bash aliases that first 'cd' into /var/www/angular then run 'grunt serve', 'grunt test', and 'grunt' respectively.
 
-**NOTE** If you run into dependency problems, try deleting the /var/www/angular/node_modules folder and running "npm cache clear" followed by "npm install"
+**GRUNT SERVE:** If you run into dependency problems, try deleting the /var/www/angular/node_modules folder and running "npm cache clear" followed by "npm install"
 
-**NOTE** if you get karma:unit Task failures, make sure your /var/www/angular/test/karma.conf.js 'files' array contains these lines:
+**GRUNT TEST/BUILD:** if you get karma:unit Task failures, make sure your /var/www/angular/test/karma.conf.js 'files' array contains these lines:
 
         '../bower_components/angular/angular.js',
         '../bower_components/angular-mocks/angular-mocks.js',
@@ -100,7 +100,7 @@ Access the dev project on your host machine's browsers at http://0.0.0.0:9000
         '../app/scripts/**/*.js',
         'spec/**/*.js'
       
-**NOTE** Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
+**NOTE:** Compressed, packaged assets can be found in ~/var/www/ang/dist and can be view by browsing to http://0.0.0.0:8888
 
 ### PHPmyAdmin
 
@@ -109,6 +109,9 @@ You can use PHPmyAdmin by browsing to http://0.0.0.0:8888/phpmyadmin
 
 ### Laravel
 
-Public Laravel api routes that you create can be tested by the host browser at http://0.0.0.0:8888/lvl/(your-api-route) **Note the /lvl extension, which is set via the /puppet/templates/vhost template during provisioning
+Public Laravel api routes that you create can be reached directly by the host browser at http://0.0.0.0:8888/lvl/(your-api-route). 
+
+Use http://localhost:8888/lvl/(your-api-route) to connect the API routes in your Angular controllers during developement. DON'T FORGET TO REMOVE http://localhost:8888 FROM ANGULAR CONTROLLER API CALLS BEFORE USING 'GRUNT' TO BUILD, /lvl/(your-api-route) IS ALL THAT IS NEEDED FOR PRODUCTION.
+
 
     
