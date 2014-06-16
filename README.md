@@ -87,6 +87,7 @@ Access the dev project on your host machine's browsers at http://0.0.0.0:9000
 **NOTE** If you run into dependency problems, try deleting the /var/www/angular/node_modules folder and running "npm cache clear" followed by "npm install"
 
 **NOTE** if you get karma:unit Task failures, make sure your /var/www/angular/test/karma.conf.js 'files' array contains these lines:
+
         '../bower_components/angular/angular.js',
         '../bower_components/angular-mocks/angular-mocks.js',
         '../bower_components/angular-resource/angular-resource.js',
