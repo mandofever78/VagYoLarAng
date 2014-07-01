@@ -53,7 +53,7 @@ echo "fi" >> /home/vagrant/.bash_profile
 
 echo "#   Change Prompt" >> /home/vagrant/.bash_profile
 echo "#   ------------------------------------------------------------" >> /home/vagrant/.bash_profile
-echo '    export PS1="________________________________________________________________________________\n|\[$Red\] \w \[$Black\]@ \[$Green\]\h - \[$BIWhite\]\[$bakblk\]\u\[$Black\] \n| \$ "' >> /home/vagrant/.bash_profile
+echo '    export PS1="________________________________________________________________________________\n|\[$Red\] \w \[$Black\]@ \[$Green\]\h - \[$BIWhite\]\[$bakblk\]\u\[$txtrst\] \n| \$ "' >> /home/vagrant/.bash_profile
 echo '    export PS2="| \$ "' >> /home/vagrant/.bash_profile
 
 
@@ -74,6 +74,7 @@ echo 'alias back="cd /var/www/laravel"' >> /home/vagrant/.bash_aliases
 echo 'alias gs="cd /var/www/angular && grunt serve"' >> /home/vagrant/.bash_aliases
 echo 'alias gt="cd /var/www/angular && grunt test"' >> /home/vagrant/.bash_aliases
 echo 'alias g="cd /var/www/angular && grunt"' >> /home/vagrant/.bash_aliases
+echo 'alias edit="sudo nano"' >> /home/vagrant/.bash_aliases
 echo "alias cp='cp -iv'                           # Preferred 'cp' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mv='mv -iv'                           # Preferred 'mv' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation" >> /home/vagrant/.bash_aliases
