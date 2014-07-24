@@ -53,7 +53,7 @@ echo "fi" >> /home/vagrant/.bash_profile
 
 echo "#   Change Prompt" >> /home/vagrant/.bash_profile
 echo "#   ------------------------------------------------------------" >> /home/vagrant/.bash_profile
-echo '    export PS1="________________________________________________________________________________\n|\[$Red\] \w \[$Black\]@ \[$Green\]\h - \[$BIWhite\]\[$bakblk\]\u\[$Black\] \n| \$ "' >> /home/vagrant/.bash_profile
+echo '    export PS1="________________________________________________________________________________\n|\[$Red\] \w \[$Black\]@ \[$Green\]\h - \[$BIWhite\]\[$bakblk\]\u\[$txtrst\] \n| \$ "' >> /home/vagrant/.bash_profile
 echo '    export PS2="| \$ "' >> /home/vagrant/.bash_profile
 
 
@@ -69,11 +69,14 @@ if [[ -e "$bash_aliases" ]]; then
 	cp "$bash_aliases" "${bash_aliases}.bak"
 fi
 
-echo 'alias front="cd /var/www/angular"' > /home/vagrant/.bash_aliases
+echo 'alias front="cd /var/www/angular"' >> /home/vagrant/.bash_aliases
 echo 'alias back="cd /var/www/laravel"' >> /home/vagrant/.bash_aliases
 echo 'alias gs="cd /var/www/angular && grunt serve"' >> /home/vagrant/.bash_aliases
 echo 'alias gt="cd /var/www/angular && grunt test"' >> /home/vagrant/.bash_aliases
 echo 'alias g="cd /var/www/angular && grunt"' >> /home/vagrant/.bash_aliases
+echo 'alias migrate="cd /var/www/laravel && php artisan migrate"' >> /home/vagrant/.bash_aliases
+echo 'alias seed="cd /var/www/laravel && php artisan db:seed"' >> /home/vagrant/.bash_aliases
+echo 'alias refresh="cd /var/www/laravel && php artisan migrate:refresh"' >> /home/vagrant/.bash_aliases
 echo "alias cp='cp -iv'                           # Preferred 'cp' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mv='mv -iv'                           # Preferred 'mv' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation" >> /home/vagrant/.bash_aliases
