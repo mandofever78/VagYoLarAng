@@ -74,13 +74,10 @@ echo 'alias back="cd /var/www/laravel"' >> /home/vagrant/.bash_aliases
 echo 'alias gs="cd /var/www/angular && grunt serve"' >> /home/vagrant/.bash_aliases
 echo 'alias gt="cd /var/www/angular && grunt test"' >> /home/vagrant/.bash_aliases
 echo 'alias g="cd /var/www/angular && grunt"' >> /home/vagrant/.bash_aliases
-<<<<<<< HEAD
 echo 'alias migrate="cd /var/www/laravel && php artisan migrate"' >> /home/vagrant/.bash_aliases
 echo 'alias seed="cd /var/www/laravel && php artisan db:seed"' >> /home/vagrant/.bash_aliases
-echo 'alias refresh="cd /var/www/laravel && php artisan migrate:refresh"' >> /home/vagrant/.bash_aliases
-=======
+echo 'alias refresh="cd /var/www/laravel && php artisan migrate:refresh && php artisan db:seed"' >> /home/vagrant/.bash_aliases
 echo 'alias edit="sudo nano"' >> /home/vagrant/.bash_aliases
->>>>>>> origin/master
 echo "alias cp='cp -iv'                           # Preferred 'cp' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mv='mv -iv'                           # Preferred 'mv' implementation" >> /home/vagrant/.bash_aliases
 echo "alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation" >> /home/vagrant/.bash_aliases
