@@ -26,7 +26,7 @@ config.vm.define :vagrant do |vgr_config|
        vgr_config.vm.network :forwarded_port, guest: 35729, host: 35729, auto_correct: true
        vgr_config.vm.network "private_network", type: "dhcp", auto_config: false
        vgr_config.vm.host_name = "vagrant"
-       vgr_config.vm.synced_folder "www", "/var/www"
+       vgr_config.vm.synced_folder "www", "/var/www", {:type => "nfs"}
        vgr_config.vm.provision :shell, :inline => "echo \"America/Chicago\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
        vgr_config.vm.provider :virtualbox do |vb|
        vb.customize ["modifyvm", :id, "--memory", "1024"]
